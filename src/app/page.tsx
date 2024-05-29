@@ -1,5 +1,7 @@
+import Link from "next/link";
 import PokemonCard from "@/components/PokemonCard/PokemonCard";
 import Pagination from "@/components/Pagination/Pagination";
+import { IoSearch } from "react-icons/io5";
 
 type Pokemon = {
   name: string;
@@ -34,7 +36,13 @@ export default async function Home() {
   };
 
   return (
-    <div className="p-4 flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl sm:text-4xl font-semibold">Pokemon App</h1>
+        <Link href={"/search"}>
+          <IoSearch size={30}/>
+        </Link>
+      </div>
       <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-2">
         {data.results.map((pokemon) => (
           <PokemonCard key={pokemon.name} pokemon={pokemon} />
