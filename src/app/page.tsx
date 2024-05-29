@@ -1,4 +1,3 @@
-import Link from "next/link";
 import PokemonCard from "@/components/PokemonCard/PokemonCard";
 import Pagination from "@/components/Pagination/Pagination";
 
@@ -36,7 +35,7 @@ export default async function Home() {
 
   return (
     <div className="p-4 flex flex-col gap-4">
-      <div className="grid grid-cols-5 gap-2">
+      <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-2">
         {data.results.map((pokemon) => (
           <PokemonCard key={pokemon.name} pokemon={pokemon} />
         ))}
