@@ -3,12 +3,12 @@ import PokemonCard from "@/components/PokemonCard/PokemonCard";
 import Pagination from "@/components/Pagination/Pagination";
 import { IoSearch } from "react-icons/io5";
 
-type Pokemon = {
+interface Pokemon {
   name: string;
   url: string;
 };
 
-type PokemonApiResponse = {
+interface PokemonApiResponse {
   next: string;
   previous: string;
   results: Pokemon[];

@@ -1,31 +1,32 @@
 'use client'
 
+import DetailTable from "@/components/DetailTable/DetailTable";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type Type = {
+interface Type {
   type: {
     name: string;
     url: string;
-  }
+  };
 };
 
-type Move = {
+interface Move {
   move: {
     name: string;
     url: string;
-  }
+  };
 };
 
-type Ability = {
+interface Ability {
   ability: {
     name: string;
     url: string;
-  }
+  };
 };
 
-interface PokemonData {
+export interface PokemonData {
   name: string;
   weight: number;
   height: number;
@@ -45,6 +46,7 @@ export default function Pokemon() {
   const { id } = useParams();
   const router = useRouter();
   const [pokemon, setPokemon] = useState<PokemonData | null>(null);
+  const [isFavoritePokemon, setIsFavoritePokemon] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -54,6 +56,30 @@ export default function Pokemon() {
         .catch((err) => console.error(err.message));
     };
   }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      const myFavPokemon = JSON.parse(localStorage.getItem('myFavPokemon') || '[]');
+      setIsFavoritePokemon(myFavPokemon.includes(id));
+    };
+  }, [id]);
+
+  const handleFavoriteClick = () => {
+    if (id) {
+      const myFavPokemon = JSON.parse(localStorage.getItem('myFavPokemon') || '[]');
+      if (myFavPokemon.includes(id)) {
+        const newFavPokemon = myFavPokemon.filter((favoriteId: string) => favoriteId !== id);
+        localStorage.setItem('myFavPokemon', JSON.stringify(newFavPokemon));
+        setIsFavoritePokemon(false);
+        alert(`Pokemon with ID ${id} has been removed from your favorites!`);
+      } else {
+        myFavPokemon.push(id);
+        localStorage.setItem('myFavPokemon', JSON.stringify(myFavPokemon));
+        setIsFavoritePokemon(true);
+        alert(`Pokemon with ID ${id} has been added to your favorites!`);
+      };
+    };
+  };
 
   if (!pokemon) {
     return <div>Loading...</div>;
@@ -70,42 +96,15 @@ export default function Pokemon() {
           height={300}
         />
       </div>
-      <div>
+      <div className="flex flex-col gap-2">
         <h2 className="text-3xl font-bold capitalize">{pokemon.name}</h2>
-        <table>
-          <tr>
-              <th className="text-start">Weight</th>
-              <td>{pokemon.weight}</td>
-          </tr>
-          <tr>
-              <th className="text-start">Height</th>
-              <td>{pokemon.height}</td>
-          </tr>
-          <tr>
-              <th className="text-start">Types:</th>
-              <td className="flex flex-wrap gap-1">
-                {pokemon.types.map((type, id) => (
-                  <span key={type.type.name} className="capitalize">{type.type.name}{id === pokemon.types.length - 1? '.': ','}</span>
-                ))}
-              </td>
-          </tr>
-          <tr>
-              <th className="text-start">Abilities:</th>
-              <td className="flex flex-wrap gap-1">
-                {pokemon.abilities.map((ability, id) => (
-                  <span key={ability.ability.name} className="capitalize">{ability.ability.name}{id === pokemon.abilities.length - 1? '.': ','}</span>
-                ))}
-              </td>
-          </tr>
-          <tr>
-              <th className="text-start align-top">Moves:</th>
-              <td className="flex flex-wrap gap-1">
-                {pokemon.moves.map((move, id) => (
-                  <span key={move.move.name} className="capitalize">{move.move.name}{id === pokemon.moves.length - 1? '.': ','}</span>
-                ))}
-              </td>
-          </tr>
-      </table>
+        <DetailTable pokemon={pokemon} />
+        <button
+          className={`${isFavoritePokemon ? "bg-red-700" : "bg-blue-700"} text-white px-3 py-2 rounded-md mr-auto`}
+          onClick={handleFavoriteClick}
+        >
+          {isFavoritePokemon ? 'Unfavorite' : 'Favorite'}
+        </button>
       </div>
     </div>
   );

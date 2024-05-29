@@ -51,7 +51,7 @@ export default function Home() {
           searchInput !== ""? (
             searchInput && <p className="text-center">No Pokemon found...</p>
           ) : (
-            <p className="text-center">Let's search pokemon!</p>
+            <p className="text-center">Let us search pokemon!</p>
           )
         )}
       </div>
