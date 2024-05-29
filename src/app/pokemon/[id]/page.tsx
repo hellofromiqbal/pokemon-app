@@ -4,21 +4,21 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type Types = {
+type Type = {
   type: {
     name: string;
     url: string;
   }
 };
 
-type Moves = {
+type Move = {
   move: {
     name: string;
     url: string;
   }
 };
 
-type Abilities = {
+type Ability = {
   ability: {
     name: string;
     url: string;
@@ -29,7 +29,7 @@ interface PokemonData {
   name: string;
   weight: number;
   height: number;
-  abilities: Abilities[];
+  abilities: Ability[];
   sprites: {
     other: {
       'official-artwork': {
@@ -37,9 +37,9 @@ interface PokemonData {
       };
     };
   };
-  types: Types[];
-  moves: Moves[];
-}
+  types: Type[];
+  moves: Move[];
+};
 
 export default function Pokemon() {
   const { id } = useParams();
@@ -48,19 +48,16 @@ export default function Pokemon() {
 
   useEffect(() => {
     if (id) {
-      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`, { cache: 'no-store' })
+      fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
         .then((res) => res.json())
-        .then((data: PokemonData) => {
-          console.log(data);
-          setPokemon(data);
-        })
+        .then((data: PokemonData) => setPokemon(data))
         .catch((err) => console.error(err.message));
-    }
+    };
   }, [id]);
 
   if (!pokemon) {
     return <div>Loading...</div>;
-  }
+  };
 
   return (
     <div className="p-4 flex flex-col gap-4">
@@ -71,7 +68,6 @@ export default function Pokemon() {
           alt={pokemon.name}
           width={300}
           height={300}
-          className="border-4 rounded-full"
         />
       </div>
       <div>

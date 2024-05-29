@@ -14,7 +14,7 @@ type PokemonApiResponse = {
 
 const getData = async (): Promise<PokemonApiResponse | null> => {
   try {
-    const res = await fetch('https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20', { cache: 'no-store' });
+    const res = await fetch('https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20');
     if (!res.ok) {
       throw new Error('Network response was not ok');
     }
