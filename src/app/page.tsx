@@ -51,16 +51,12 @@ export default function Home() {
     fetchData();
   }, [url]);
 
-  if(loading){
+  if(loading || !data){
     return <LoadingPage/>;
   };
 
   if(error){
     return <ErrorPage/>;
-  };
-
-  if(!data){
-    return <Custom404Page/>;
   };
 
   return (
