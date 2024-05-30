@@ -87,7 +87,7 @@ export default function Pokemon() {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="p-4 flex flex-col gap-4">
       <button className="self-start text-lg" onClick={() => router.back()}>Back</button>
       <div className="flex justify-center">
         <Image

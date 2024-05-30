@@ -32,7 +32,7 @@ export default function Home() {
   }, [searchInput, allPokemon]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="p-4 flex flex-col gap-4">
       <input
         type="search"
         name="searchBar"
