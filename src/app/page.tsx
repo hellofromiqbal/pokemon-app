@@ -1,7 +1,10 @@
+'use client';
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { IoSearch } from "react-icons/io5";
 import PokemonCard from "@/components/PokemonCard/PokemonCard";
 import Pagination from "@/components/Pagination/Pagination";
-import { IoSearch } from "react-icons/io5";
 
 interface Pokemon {
   name: string;
@@ -14,25 +17,47 @@ interface PokemonApiResponse {
   results: Pokemon[];
 };
 
-const getData = async (): Promise<PokemonApiResponse | null> => {
-  try {
-    const res = await fetch('https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20');
-    if (!res.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data: PokemonApiResponse = await res.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-    return null;
-  };
-};
+export default function Home() {
+  const [data, setData] = useState<PokemonApiResponse | null>(null);
+  const [url, setUrl] = useState("https://pokeapi.co/api/v2/pokemon/?offset=0&limit=20");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-export default async function Home() {
-  const data = await getData();
+  const handlePagination = (newUrl: string) => {
+    setUrl(newUrl);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        };
+        const data: PokemonApiResponse = await response.json();
+        setData(data);
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      };
+    };
+
+    fetchData();
+  }, [url]);
+
+  if (loading) {
+    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+  };
+
+  if (error) {
+    return <div className="flex justify-center items-center h-screen">Error: {error}</div>;
+  };
 
   if (!data) {
-    return <div>Failed to load data</div>;
+    return <div className="flex justify-center items-center h-screen">No data available</div>;
   };
 
   return (
@@ -45,10 +70,10 @@ export default async function Home() {
       </div>
       <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-2">
         {data.results.map((pokemon) => (
-          <PokemonCard key={pokemon.name} pokemon={pokemon} />
+          <PokemonCard key={pokemon.name} pokemon={pokemon}/>
         ))}
       </div>
-      <Pagination previous={data.previous} next={data.next}/>
+      <Pagination previous={data.previous} next={data.next} handlePagination={handlePagination}/>
     </div>
   );
 };

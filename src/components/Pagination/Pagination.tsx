@@ -1,15 +1,28 @@
-import Link from "next/link";
-
-type PokemonCardProps = {
-  previous: string;
-  next: string;
+type PaginationProps = {
+  previous: string | null;
+  next: string | null;
+  handlePagination: (newUrl: string) => void;
 };
 
-export default function Pagination({ previous, next } : PokemonCardProps) {
+export default function Pagination({ previous, next, handlePagination }: PaginationProps) {
   return (
     <div className="flex">
-      {previous && <Link href={previous} className="bg-blue-700 text-white px-3 py-2 rounded-md mr-auto">Prev</Link>}
-      {next && <Link href={next} className="bg-blue-700 text-white px-3 py-2 rounded-md ml-auto">Next</Link>}
+      {previous &&
+        <button
+          className="bg-blue-700 text-white px-3 py-2 rounded-md mr-auto"
+          onClick={() => handlePagination(previous)}
+        >
+          Prev
+        </button>
+      }
+      {next &&
+        <button
+          className="bg-blue-700 text-white px-3 py-2 rounded-md ml-auto"
+          onClick={() => handlePagination(next)}
+        >
+          Next
+        </button>
+      }
     </div>
-  )
+  );
 };
