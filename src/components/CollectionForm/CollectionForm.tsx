@@ -52,6 +52,7 @@ export default function CollectionForm({ pokemonId, handleShowCollectionForm, se
               type="text"
               placeholder="Enter nickname for your Pokemon!"
               className="border px-2 py-1"
+              autoComplete="off"
               {...register('nickname')}
             />
             {errors.nickname && <p className="text-red-500">{errors.nickname.message}</p>}
@@ -63,6 +64,7 @@ export default function CollectionForm({ pokemonId, handleShowCollectionForm, se
               type="text"
               placeholder="Enter description for your Pokemon!"
               className="border px-2 py-1"
+              autoComplete="off"
               {...register('description')}
             />
             {errors.description && <p className="text-red-500">{errors.description.message}</p>}
