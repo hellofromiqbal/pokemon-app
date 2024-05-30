@@ -64,7 +64,7 @@ export default function Home() {
   };
 
   return (
-    <div className="p-4 flex flex-col gap-4">
+    <div className="p-4 lg:px-0 flex flex-col gap-4">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl sm:text-4xl font-semibold">Pokemon App</h1>
         <Link href={"/search"}>

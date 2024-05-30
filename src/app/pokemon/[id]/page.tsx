@@ -1,6 +1,7 @@
 'use client'
 
 import LoadingPage from "@/app/loading";
+import BackButton from "@/components/BackButton/BackButton";
 import DetailTable from "@/components/DetailTable/DetailTable";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
@@ -87,8 +88,8 @@ export default function Pokemon() {
   };
 
   return (
-    <div className="p-4 flex flex-col gap-4">
-      <button className="self-start text-lg" onClick={() => router.back()}>Back</button>
+    <div className="p-4 lg:px-0 flex flex-col gap-4">
+      <BackButton/>
       <div className="flex justify-center">
         <Image
           src={pokemon.sprites.other['official-artwork'].front_shiny}

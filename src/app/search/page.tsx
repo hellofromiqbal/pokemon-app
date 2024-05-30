@@ -1,6 +1,8 @@
 'use client'
 
+import BackButton from "@/components/BackButton/BackButton";
 import PokemonCard from "@/components/PokemonCard/PokemonCard";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface Pokemon {
@@ -9,6 +11,7 @@ interface Pokemon {
 };
 
 export default function Home() {
+  const router = useRouter();
   const [searchInput, setSearchInput] = useState<string>("");
   const [allPokemon, setAllPokemon] = useState<Pokemon[]>([]);
   const [filteredPokemon, setFilteredPokemon] = useState<Pokemon[]>([]);
@@ -32,7 +35,8 @@ export default function Home() {
   }, [searchInput, allPokemon]);
 
   return (
-    <div className="p-4 flex flex-col gap-4">
+    <div className="p-4 lg:px-0 flex flex-col gap-4">
+      <BackButton/>
       <input
         type="search"
         name="searchBar"
