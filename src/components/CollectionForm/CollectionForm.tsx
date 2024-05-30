@@ -1,10 +1,14 @@
 import { IoCloseCircleOutline } from "react-icons/io5";
 
-export default function CollectionForm() {
+interface CollectionFormProps {
+  handleShowCollectionForm: () => void;
+}
+
+export default function CollectionForm({ handleShowCollectionForm } : CollectionFormProps) {
   return (
     <div className="fixed top-0 right-0 bottom-0 left-0 flex justify-center items-center h-screen bg-black bg-opacity-30">
       <form className="p-4 flex flex-col gap-2 w-11/12 sm:w-2/3 lg:w-1/3 bg-white rounded-md relative">
-        <button className="absolute top-4 right-4">
+        <button className="absolute top-4 right-4" onClick={handleShowCollectionForm}>
           <IoCloseCircleOutline size={30}/>
         </button>
         <h3 className="text-center text-xl font-bold">Save Pokemon</h3>

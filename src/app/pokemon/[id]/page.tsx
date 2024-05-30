@@ -48,8 +48,12 @@ export interface PokemonData {
 export default function Pokemon() {
   const { id } = useParams();
   const [pokemon, setPokemon] = useState<PokemonData | null>(null);
-  const [showCollectionForm, setShowCollectionForm] = useState(true);
   const [isFavoritePokemon, setIsFavoritePokemon] = useState(false);
+  const [showCollectionForm, setShowCollectionForm] = useState(false);
+
+  const handleShowCollectionForm = () => {
+    setShowCollectionForm((prev) => !prev);
+  };
 
   useEffect(() => {
     if (id) {
@@ -90,7 +94,7 @@ export default function Pokemon() {
 
   return (
     <div className="p-4 lg:px-0 flex flex-col gap-4 relative">
-      {showCollectionForm && <CollectionForm/>}
+      {showCollectionForm && <CollectionForm handleShowCollectionForm={handleShowCollectionForm}/>}
       <BackButton/>
       <div className="flex justify-center">
         <Image
@@ -105,7 +109,7 @@ export default function Pokemon() {
         <DetailTable pokemon={pokemon} />
         <button
           className={`${isFavoritePokemon ? "bg-red-700" : "bg-blue-700"} text-white px-3 py-2 rounded-md mr-auto`}
-          onClick={handleFavoriteClick}
+          onClick={isFavoritePokemon ? handleFavoriteClick : handleShowCollectionForm}
         >
           {isFavoritePokemon ? 'Unfavorite' : 'Favorite'}
         </button>
