@@ -2,9 +2,10 @@
 
 import LoadingPage from "@/app/loading";
 import BackButton from "@/components/BackButton/BackButton";
+import CollectionForm from "@/components/CollectionForm/CollectionForm";
 import DetailTable from "@/components/DetailTable/DetailTable";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface Type {
@@ -46,8 +47,8 @@ export interface PokemonData {
 
 export default function Pokemon() {
   const { id } = useParams();
-  const router = useRouter();
   const [pokemon, setPokemon] = useState<PokemonData | null>(null);
+  const [showCollectionForm, setShowCollectionForm] = useState(true);
   const [isFavoritePokemon, setIsFavoritePokemon] = useState(false);
 
   useEffect(() => {
@@ -88,7 +89,8 @@ export default function Pokemon() {
   };
 
   return (
-    <div className="p-4 lg:px-0 flex flex-col gap-4">
+    <div className="p-4 lg:px-0 flex flex-col gap-4 relative">
+      {showCollectionForm && <CollectionForm/>}
       <BackButton/>
       <div className="flex justify-center">
         <Image
