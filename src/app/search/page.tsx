@@ -1,8 +1,8 @@
 'use client'
 
+import { useEffect, useState } from "react";
 import BackButton from "@/components/BackButton/BackButton";
 import PokemonCard from "@/components/PokemonCard/PokemonCard";
-import { useEffect, useState } from "react";
 
 interface Pokemon {
   name: string;
@@ -22,14 +22,14 @@ export default function SearchPage() {
   }, []);
 
   useEffect(() => {
-    if (searchInput) {
+    if(searchInput){
       const results = allPokemon.filter(pokemon =>
         pokemon.name.toLowerCase().includes(searchInput.toLowerCase())
       );
       setFilteredPokemon(results);
     } else {
       setFilteredPokemon([]);
-    }
+    };
   }, [searchInput, allPokemon]);
 
   return (

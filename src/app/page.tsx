@@ -36,7 +36,7 @@ export default function Home() {
       setError(null);
       try {
         const response = await fetch(url);
-        if(!response.ok) {
+        if(!response.ok){
           throw new Error(`Error: ${response.status}`);
         };
         const data: PokemonApiResponse = await response.json();
@@ -47,19 +47,18 @@ export default function Home() {
         setLoading(false);
       };
     };
-
     fetchData();
   }, [url]);
 
-  if (loading) {
+  if(loading){
     return <LoadingPage/>;
   };
 
-  if (error) {
+  if(error){
     return <ErrorPage/>;
   };
 
-  if (!data) {
+  if(!data){
     return <Custom404Page/>;
   };
 
