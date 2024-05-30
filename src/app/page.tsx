@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { IoSearch } from "react-icons/io5";
 import PokemonCard from "@/components/PokemonCard/PokemonCard";
 import Pagination from "@/components/Pagination/Pagination";
 import LoadingPage from "./loading";
 import ErrorPage from "./error";
 import Custom404Page from "./404";
+import { IoSearch } from "react-icons/io5";
+import { MdOutlineCatchingPokemon } from "react-icons/md";
 
 interface Pokemon {
   name: string;
@@ -66,9 +67,14 @@ export default function Home() {
     <div className="p-4 lg:px-0 flex flex-col gap-4">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl sm:text-4xl font-semibold">Pokemon App</h1>
-        <Link href={"/search"}>
-          <IoSearch size={30}/>
-        </Link>
+        <div className="flex gap-4">
+          <Link href={"/favorite"}>
+            <MdOutlineCatchingPokemon size={30}/>
+          </Link>
+          <Link href={"/search"}>
+            <IoSearch size={30}/>
+          </Link>
+        </div>
       </div>
       <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-2">
         {data.results.map((pokemon) => (
