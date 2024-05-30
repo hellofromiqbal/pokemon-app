@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { collectionFormSchema } from "@/helpers/zodSchema";
+import { notifySuccess } from "@/helpers/toaster";
 
 interface CollectionFormProps {
   pokemonId: string;
@@ -28,6 +29,7 @@ export default function CollectionForm({ pokemonId, handleShowCollectionForm, se
     };
     myFavPokemon.push(newFavorite);
     localStorage.setItem('myFavPokemon', JSON.stringify(myFavPokemon));
+    notifySuccess('This pokemon has been saved to favorites!');
     setIsFavoritePokemon(true);
     handleShowCollectionForm();
   };

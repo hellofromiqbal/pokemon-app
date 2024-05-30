@@ -7,6 +7,7 @@ import LoadingPage from "@/app/loading";
 import BackButton from "@/components/BackButton/BackButton";
 import CollectionForm from "@/components/CollectionForm/CollectionForm";
 import DetailTable from "@/components/DetailTable/DetailTable";
+import { notifySuccess } from "@/helpers/toaster";
 
 interface Type {
   type: {
@@ -79,7 +80,7 @@ export default function PokemonPage() {
         const newFavPokemon = myFavPokemon.filter((favorite: any) => favorite.id !== id);
         localStorage.setItem('myFavPokemon', JSON.stringify(newFavPokemon));
         setIsFavoritePokemon(false);
-        alert(`Pokemon with ID ${id} has been removed from your favorites!`);
+        notifySuccess('Pokemon has been removed from favorites!');
       } else {
         setShowCollectionForm(true);
       };
