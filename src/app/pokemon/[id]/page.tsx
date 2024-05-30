@@ -100,7 +100,10 @@ export default function PokemonPage() {
           setIsFavoritePokemon={setIsFavoritePokemon}
         />
       )}
-      <BackButton />
+      <div className='flex justify-between items-center'>
+        <BackButton />
+        <h2 className='font-bold text-xl'>Pokemon Details</h2>
+      </div>
       <div className="flex justify-center">
         <Image
           src={pokemon.sprites.other['official-artwork'].front_shiny}
