@@ -9,7 +9,7 @@ interface Pokemon {
   url: string;
 };
 
-export default function Home() {
+export default function SearchPage() {
   const [searchInput, setSearchInput] = useState<string>("");
   const [allPokemon, setAllPokemon] = useState<Pokemon[]>([]);
   const [filteredPokemon, setFilteredPokemon] = useState<Pokemon[]>([]);

@@ -1,12 +1,12 @@
 'use client'
 
+import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import LoadingPage from "@/app/loading";
 import BackButton from "@/components/BackButton/BackButton";
 import CollectionForm from "@/components/CollectionForm/CollectionForm";
 import DetailTable from "@/components/DetailTable/DetailTable";
-import Image from "next/image";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 interface Type {
   type: {
@@ -45,8 +45,8 @@ export interface PokemonData {
   moves: Move[];
 };
 
-export default function Pokemon() {
-  const { id } = useParams();
+export default function PokemonPage() {
+  const { id } = useParams<{ id: string }>();
   const [pokemon, setPokemon] = useState<PokemonData | null>(null);
   const [isFavoritePokemon, setIsFavoritePokemon] = useState(false);
   const [showCollectionForm, setShowCollectionForm] = useState(false);
@@ -56,7 +56,7 @@ export default function Pokemon() {
   };
 
   useEffect(() => {
-    if (id) {
+    if(id){
       fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
         .then((res) => res.json())
         .then((data: PokemonData) => setPokemon(data))
@@ -65,37 +65,41 @@ export default function Pokemon() {
   }, [id]);
 
   useEffect(() => {
-    if (id) {
+    if(id){
       const myFavPokemon = JSON.parse(localStorage.getItem('myFavPokemon') || '[]');
-      setIsFavoritePokemon(myFavPokemon.includes(id));
+      const isFavorite = myFavPokemon.some((favorite: any) => favorite.id === id);
+      setIsFavoritePokemon(isFavorite);
     };
   }, [id]);
 
   const handleFavoriteClick = () => {
-    if (id) {
+    if(id){
       const myFavPokemon = JSON.parse(localStorage.getItem('myFavPokemon') || '[]');
-      if (myFavPokemon.includes(id)) {
-        const newFavPokemon = myFavPokemon.filter((favoriteId: string) => favoriteId !== id);
+      if(isFavoritePokemon){
+        const newFavPokemon = myFavPokemon.filter((favorite: any) => favorite.id !== id);
         localStorage.setItem('myFavPokemon', JSON.stringify(newFavPokemon));
         setIsFavoritePokemon(false);
         alert(`Pokemon with ID ${id} has been removed from your favorites!`);
       } else {
-        myFavPokemon.push(id);
-        localStorage.setItem('myFavPokemon', JSON.stringify(myFavPokemon));
-        setIsFavoritePokemon(true);
-        alert(`Pokemon with ID ${id} has been added to your favorites!`);
+        setShowCollectionForm(true);
       };
     };
   };
 
-  if (!pokemon) {
-    return <LoadingPage/>;
+  if(!pokemon){
+    return <LoadingPage />;
   };
 
   return (
     <div className="p-4 lg:px-0 flex flex-col gap-4 relative">
-      {showCollectionForm && <CollectionForm handleShowCollectionForm={handleShowCollectionForm}/>}
-      <BackButton/>
+      {showCollectionForm && (
+        <CollectionForm
+          pokemonId={id}
+          handleShowCollectionForm={handleShowCollectionForm}
+          setIsFavoritePokemon={setIsFavoritePokemon}
+        />
+      )}
+      <BackButton />
       <div className="flex justify-center">
         <Image
           src={pokemon.sprites.other['official-artwork'].front_shiny}
@@ -109,7 +113,7 @@ export default function Pokemon() {
         <DetailTable pokemon={pokemon} />
         <button
           className={`${isFavoritePokemon ? "bg-red-700" : "bg-blue-700"} text-white px-3 py-2 rounded-md mr-auto`}
-          onClick={isFavoritePokemon ? handleFavoriteClick : handleShowCollectionForm}
+          onClick={handleFavoriteClick}
         >
           {isFavoritePokemon ? 'Unfavorite' : 'Favorite'}
         </button>
