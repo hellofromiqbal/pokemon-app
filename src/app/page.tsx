@@ -5,6 +5,9 @@ import { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import PokemonCard from "@/components/PokemonCard/PokemonCard";
 import Pagination from "@/components/Pagination/Pagination";
+import LoadingPage from "./loading";
+import ErrorPage from "./error";
+import Custom404Page from "./404";
 
 interface Pokemon {
   name: string;
@@ -33,12 +36,12 @@ export default function Home() {
       setError(null);
       try {
         const response = await fetch(url);
-        if (!response.ok) {
+        if(!response.ok) {
           throw new Error(`Error: ${response.status}`);
         };
         const data: PokemonApiResponse = await response.json();
         setData(data);
-      } catch (error: any) {
+      } catch(error: any) {
         setError(error.message);
       } finally {
         setLoading(false);
@@ -49,15 +52,15 @@ export default function Home() {
   }, [url]);
 
   if (loading) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    return <LoadingPage/>;
   };
 
   if (error) {
-    return <div className="flex justify-center items-center h-screen">Error: {error}</div>;
+    return <ErrorPage/>;
   };
 
   if (!data) {
-    return <div className="flex justify-center items-center h-screen">No data available</div>;
+    return <Custom404Page/>;
   };
 
   return (

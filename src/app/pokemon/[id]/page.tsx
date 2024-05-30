@@ -1,5 +1,6 @@
 'use client'
 
+import LoadingPage from "@/app/loading";
 import DetailTable from "@/components/DetailTable/DetailTable";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
@@ -82,7 +83,7 @@ export default function Pokemon() {
   };
 
   if (!pokemon) {
-    return <div>Loading...</div>;
+    return <LoadingPage/>;
   };
 
   return (
