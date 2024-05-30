@@ -20,12 +20,18 @@ export default function FavoritePage() {
 
   return (
     <div className="p-4 lg:px-0 flex flex-col gap-4">
-      <BackButton />
-      <h1>Favorite Pokémon</h1>
+      <div className='flex justify-between items-center'>
+        <BackButton />
+        <h2 className='font-bold text-xl'>Favorite Pokemon</h2>
+      </div>
       <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-2">
-        {favoritePokemon.map((pokemon: Pokemon, index) => (
-          <PokemonCard key={pokemon.id} pokemon={pokemon}/>
-        ))}
+        {favoritePokemon.length > 0 ? (
+          favoritePokemon.map((pokemon: Pokemon, index) => (
+            <PokemonCard key={pokemon.id} pokemon={pokemon}/>
+          ))
+        ) : (
+          <h1>No favorite pokemon...</h1>
+        )}
       </div>
     </div>
   );

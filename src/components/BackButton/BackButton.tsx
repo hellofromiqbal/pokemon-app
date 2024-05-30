@@ -4,8 +4,9 @@ import { IoArrowBack } from "react-icons/io5";
 export default function BackButton() {
   const router = useRouter();
   return (
-    <button className="self-start text-lg" onClick={() => router.back()}>
-      <IoArrowBack size={30}/>
+    <button className="flex items-center gap-2 self-start text-lg font-semibold" onClick={() => router.back()}>
+      <IoArrowBack size={20}/>
+      <span>Back</span>
     </button>
   )
 };

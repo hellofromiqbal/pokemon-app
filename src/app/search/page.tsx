@@ -34,7 +34,10 @@ export default function SearchPage() {
 
   return (
     <div className="p-4 lg:px-0 flex flex-col gap-4">
-      <BackButton/>
+      <div className='flex justify-between items-center'>
+        <BackButton />
+        <h2 className='font-bold text-xl'>Search Pokemon</h2>
+      </div>
       <input
         type="search"
         name="searchBar"
