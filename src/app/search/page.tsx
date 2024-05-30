@@ -2,7 +2,6 @@
 
 import BackButton from "@/components/BackButton/BackButton";
 import PokemonCard from "@/components/PokemonCard/PokemonCard";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface Pokemon {
@@ -11,7 +10,6 @@ interface Pokemon {
 };
 
 export default function Home() {
-  const router = useRouter();
   const [searchInput, setSearchInput] = useState<string>("");
   const [allPokemon, setAllPokemon] = useState<Pokemon[]>([]);
   const [filteredPokemon, setFilteredPokemon] = useState<Pokemon[]>([]);
