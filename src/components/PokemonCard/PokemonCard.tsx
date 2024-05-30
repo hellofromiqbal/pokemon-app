@@ -23,7 +23,7 @@ export default function PokemonCard({ pokemon, children }: PokemonCardProps) {
   };
 
   return (
-    <Link href={`/pokemon/${pokemonId}`} className="flex py-2 border rounded-md">
+    <Link href={`/pokemon/${pokemonId}`} className="flex py-2 border rounded-md bg-white">
       <div className="w-1/3 flex justify-center items-center">
         <Image src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`} alt="pokemonImg" width={70} height={70}/>
       </div>

@@ -6,7 +6,7 @@ interface DetailTableProps {
 
 export default function DetailTable({ pokemon }: DetailTableProps) {
   return (
-    <table className="border border-black w-full">
+    <table className="border border-black w-full bg-white">
       <thead>
         <tr>
           <th className="px-2 py-1 border border-black text-start">Attribute</th>
